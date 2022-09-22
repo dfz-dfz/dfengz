@@ -40,12 +40,12 @@ const formatToFixed = (money: number, decimals = 2) => {
 const Format = {
   /**
    * 格式化金额展示： 12341234.246 -> $ 12,341,234.25
-   * @param money 
+   * @param {number} money 
    * @param symbol 
-   * @param decimals 
+   * @param {number} decimals 
    * @returns 
    */
-  formatMoney: (money, symbol = "", decimals = 2) =>
+  formatMoney: (money: number, symbol = "", decimals: number = 2) =>
     formatToFixed(money, decimals)
       .replace(/\B(?=(\d{3})+\b)/g, ",")
       .replace(/^/, `${symbol}`),

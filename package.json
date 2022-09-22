@@ -1,20 +1,11 @@
 {
-  "name": "@dfz/utils",
-  "version": "1.0.0",
+  "name": "dfengz",
+  "version": "1.0.1",
   "description": "Common utility functions",
   "author": "dfz-dfz <https://github.com/dfz-dfz>",
   "license": "MIT",
   "private": false,
-  "main": "./index.cjs",
-  "module": "./index.mjs",
-  "exports": {
-    ".": {
-      "types": "./index.d.ts",
-      "require": "./index.cjs",
-      "import": "./index.mjs"
-    },
-    "./*": "./*"
-  },
+  "main": "./index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/dfz-dfz/dfengz.git"

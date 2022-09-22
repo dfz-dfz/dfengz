@@ -4,5 +4,11 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"editor.tabSize": 2,
+		"editor.codeActionsOnSave": {},
+		"editor.formatOnPaste": true,
+		"editor.formatOnSave": true,
+		"eslint.codeActionsOnSave.rules": null,
+	}
 }

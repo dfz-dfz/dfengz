@@ -1,54 +1,103 @@
-const Validate = {
+/** 防抖 */
+export class Debounced {
   /**
-   * 手机号校验
-   * @param {number | string} value
-   * @return {boolean}
+   * @param {Function} func 需要包装的函数
+   * @param {number} delay 延迟时间，单位ms
+   * @param {boolean} immediate 是否默认执行一次(第一次不延迟)
    */
-  mobileCheck: (value: number | string): boolean => /^[1][3,4,5,6,7,8,9][0-9]{9}$/.test(String(value)),
-
-  /**
-   * 身份证校验
-   * @param {string | number} value
-   * @return {boolean}
-   */
-  IDCardCheck: (value: string | number): boolean =>
-    /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(String(value)),
-
-  /**
-   * 邮箱校验
-   * @param {string} value
-   * @return {boolean}
-   */
-  emailCheck: (value: string): boolean =>
-    /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(value),
-};
-
-/**
- * 解决toFixed保留小数的问题
- * @param {number} money 
- * @param decimals 
- * @returns 
- */
-const formatToFixed = (money: number, decimals = 2) => {
-  return (
-    Math.round(
-      (parseFloat(JSON.stringify(money)) + Number.EPSILON) * Math.pow(10, decimals)
-    ) / Math.pow(10, decimals)
-  ).toFixed(decimals);
+  public use = (func: Function, delay: number, immediate: boolean = false): Function => {
+    let timer: number | undefined;
+    return (...args: any) => {
+      if (immediate) {
+        func.apply(this, args); // 确保引用函数的指向正确，并且函数的参数也不变
+        immediate = false;
+        return;
+      }
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    }
+  }
 }
 
-const Format = {
-  /**
-   * 格式化金额展示： 12341234.246 -> $ 12,341,234.25
-   * @param {number} money 
-   * @param symbol 
-   * @param {number} decimals 
-   * @returns 
-   */
-  formatMoney: (money: number, symbol = "", decimals: number = 2) =>
-    formatToFixed(money, decimals)
-      .replace(/\B(?=(\d{3})+\b)/g, ",")
-      .replace(/^/, `${symbol}`),
-};
+/** 节流 */
+export class Throttle {
+  private timer: number | undefined;
+  private stop: boolean = false;
+  private death: boolean = false;
 
-export { Format, Validate };
+  /**
+   * @param {Function} func 需要包装的函数
+   * @param {number} delay 延迟时间，单位ms
+   * @param {boolean} immediate 是否默认执行一次(第一次不延迟)
+   */
+  public use(func: Function, delay: number, immediate: boolean = false): Function {
+    let flag = true;
+    const self = this;
+    return (...args: any) => {
+      if (this.death) {
+        return func.apply(this, args);
+
+      }
+      if (this.stop) {
+        return func.apply(this, args);
+
+      }
+      if (immediate) {
+        func.apply(this, args);
+        immediate = false;
+        return;
+      }
+      if (!flag) {
+        return;
+      }
+      flag = false;
+      self.timer = setTimeout(() => {
+        func.apply(this, args);
+        flag = true;
+      }, delay);
+    }
+  }
+
+  // 销毁
+  public destroy() {
+    this.death = true;
+    this.stop = true;
+    if (!!this.timer) {
+      clearTimeout(this.timer);
+      this.timer = undefined;
+    }
+  }
+  // 开启
+  public open() {
+    if (!this.death) {
+      this.stop = false;
+    }
+  }
+  // 关闭
+  public close() {
+    this.stop = true;
+  }
+}
+
+/**
+ * 深拷贝
+ * 这只是深拷贝的一个简单版本
+ * @param {object} source
+ * @returns {object}
+ */
+export function deepClone(source: any): any {
+  if (!source && typeof source !== 'object') {
+    throw new Error('error arguments', 'deepClone Function' as ErrorOptions);
+  }
+  const targetObj = source.constructor === Array ? [] : {};
+  Object.keys(source).forEach(keys => {
+    if (source[keys] && typeof source[keys] === 'object') {
+      targetObj[keys] = deepClone(source[keys]);
+    } else {
+      targetObj[keys] = source[keys];
+    }
+  })
+  return targetObj;
+}

@@ -114,7 +114,7 @@ export function cloneAll(value: any, deep: any) {
     value = Array.prototype.slice.call(value)
     return deep ? value.map(item => cloneAll(item, deep)) : value
   } else if (isPlainObject(value)) { //是对象
-    let target = {}, key;
+    let target = {}, key: string | number;
     for (key in value) {
       value.hasOwnProperty(key) && (target[key] = deep ? cloneAll(value[key], deep) : value[key])
     }

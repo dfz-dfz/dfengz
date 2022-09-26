@@ -14,7 +14,8 @@
     "utils",
     "function",
     "format",
-    "validate"
+    "validate",
+    "typeCheck"
   ],
   "bugs": {
     "url": "https://github.com/dfz-dfz/dfengz/issues"

@@ -1,4 +1,4 @@
 export * from './validate';
 export * from './format';
-export * from './utils';
+export * from './utilFun';
 export * from './typeCheck';

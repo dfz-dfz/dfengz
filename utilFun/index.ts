@@ -104,29 +104,29 @@ export function deepClone(source: any): any {
   return targetObj;
 }
 
-/** 原始类型，时间、正则、错误、数组、对象的克隆规则 */
+/** 原始类型，时间、正则、错误、数组、对象的克隆 */
 export function cloneAll(value: any, deep: any) {
   if (isPrimitive(value)) {
-    return value
+    return value;
   }
 
   if (isArrayLike(value)) { //是类数组
-    value = Array.prototype.slice.call(value)
-    return deep ? value.map(item => cloneAll(item, deep)) : value
+    value = Array.prototype.slice.call(value);
+    return deep ? value.map(item => cloneAll(item, deep)) : value;
   } else if (isPlainObject(value)) { //是对象
     let target = {}, key: string | number;
     for (key in value) {
-      value.hasOwnProperty(key) && (target[key] = deep ? cloneAll(value[key], deep) : value[key])
+      value.hasOwnProperty(key) && (target[key] = deep ? cloneAll(value[key], deep) : value[key]);
     }
-    return target
+    return target;
   }
 
-  let type = getRawType(value)
+  let type = getRawType(value);
 
   switch (type) {
     case 'Date':
     case 'RegExp':
     case 'Error': value = new window[type](value); break;
   }
-  return value
+  return value;
 }

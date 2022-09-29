@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "charset": "utf8",
+    "declaration": true,
+    "declarationDir": "",
     "rootDir": ".",
     "outDir": "dist",
     "target": "ESNext",

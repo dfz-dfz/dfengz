@@ -112,7 +112,7 @@ export function cloneAll(value: any, deep: any) {
 
   if (isArrayLike(value)) { //是类数组
     value = Array.prototype.slice.call(value);
-    return deep ? value.map(item => cloneAll(item, deep)) : value;
+    return deep ? value.map((item: any) => cloneAll(item, deep)) : value;
   } else if (isPlainObject(value)) { //是对象
     let target = {}, key: string | number;
     for (key in value) {
@@ -129,4 +129,13 @@ export function cloneAll(value: any, deep: any) {
     case 'Error': value = new window[type](value); break;
   }
   return value;
+}
+
+/**
+ * 删除对象某一个属性（替代delete来删除属性）
+ * @example const objectA = {a: 0, b: 1}; console.log(removeProperty(objectA, 'b')); // {a: 0}
+ */
+export function removeProperty(target: object, propertyToRemove: string | number) {
+  const { [propertyToRemove]: _, ...newTarget } = target;
+  return newTarget;
 }

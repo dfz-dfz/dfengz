@@ -6,9 +6,10 @@
   "license": "MIT",
   "private": false,
   "main": "./index.ts",
+  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/dfz-dfz/dfengz.git"
+    "url": "git+https://github.com/dfz-dfz/dfengz.git"
   },
   "keywords": [
     "utils",

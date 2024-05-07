@@ -1,7 +1,10 @@
 {
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [],
   "compilerOptions": {
     "baseUrl": ".",
-    "charset": "utf8",
     "declaration": true,
     "declarationDir": "",
     "rootDir": ".",
@@ -24,7 +27,6 @@
     "resolveJsonModule": true,
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
-    "suppressImplicitAnyIndexErrors": true,
     "noImplicitAny": true,
     "paths": {
       "~/*": [

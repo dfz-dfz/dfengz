@@ -284,7 +284,7 @@ module.exports = {
     'template-curly-spacing': [2, 'never'],
     // 要求使用 isNaN() 检查 NaN
     'use-isnan': 2,
-    // typeof foo === "undefimed" 错误
+    // typeof foo === "undefined" 错误
     'valid-typeof': 2,
     // 要求 IIFE 使用括号括起来
     'wrap-iife': [2, 'any'],
